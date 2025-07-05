@@ -92,22 +92,6 @@ const SearchMovieScreen = () => {
     };
   }, [searchQuery]);
 
-  // const getCategories = useCallback(async () => {
-  //   try {
-  //     showLoading();
-  //     const response = await MovieService.getCategories();
-  //     const categoriesWithImages = response.genres.map((genre: Category) => ({
-  //       ...genre,
-  //       image: `https://picsum.photos/200/300?random=${genre.id}`,
-  //     }));
-  //     setCategories(categoriesWithImages);
-  //   } catch (error) {
-  //     console.error("Error fetching categories:", error);
-  //   } finally {
-  //     hideLoading();
-  //   }
-  // }, []);
-
   const getCategories = async () => {
     try {
       showLoading();
