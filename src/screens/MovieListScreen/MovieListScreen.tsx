@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import { useLoading } from '../../context/LoadingContext';
 import {
   Text,
   FlatList,
@@ -23,15 +24,28 @@ import {IMAGE_URL_FROM_ENV} from '@env';
 const MovieListScreen: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
+  const { showLoading, hideLoading } = useLoading();
   const watchStackNavigation = useNavigation<WatchStackNavigationProp<'SearchMovie'>>();
   const rootNavigation = useNavigation<RootStackNavigationProp<'MovieDetail'>>();
+  
   useEffect(() => {
     getMovies(page);
   }, [page]);
-
+  
   const getMovies = async (pageNumber: number) => {
-    const response = await MovieService.getMovies(pageNumber);
-    setMovies((prev: any) => [...prev, ...response.results]);
+    try {
+      showLoading();
+      const response = await MovieService.getMovies(pageNumber);
+      if (pageNumber === 1) {
+        setMovies(response.results);
+      } else {
+        setMovies(prevMovies => [...prevMovies, ...response.results]);
+      }
+    } catch (error) {
+      console.error('Error fetching movies:', error);
+    } finally {
+      hideLoading();
+    }
   };
 
   const loadMoreMovies = () => {
