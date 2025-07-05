@@ -1,13 +1,14 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNavigator from './BottomTabNavigator';
 import MovieDetailScreen from '../screens/MovieDetailScreen/MovieDetailScreen';
 import BookingScreen from '../screens/BookingScreen/BookingScreen';
 import SeatSelectionScreen from '../screens/SeatSelectionScreen/SeatSelectionScreen';
+import { RootStackParamList } from '../types/navigatorTypes';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
-const StackNavigator = () => {
+const StackNavigator: React.FC = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen

@@ -3,10 +3,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import MovieListScreen from '../screens/MovieListScreen/MovieListScreen';
 import SearchMovieScreen from '../screens/SearchMovieScreen/SearchMovieScreen';
 import CategoryMoviesScreen from '../screens/CategoryMoviesScreen/CategoryMoviesScreen';
+import { WatchStackParamList } from '../types/navigatorTypes';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<WatchStackParamList>();
 
-const WatchStack = () => {
+const WatchStack: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen 

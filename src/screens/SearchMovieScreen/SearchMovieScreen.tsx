@@ -18,12 +18,15 @@ import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import Svgs from '../../assets/graphics/svgs';
 import {WP} from '../../assets/config/space';
 import {colors} from '../../assets/config/colors';
+import { WatchStackNavigationProp, RootStackNavigationProp } from '../../types/navigatorTypes';
+import { Movie, Category } from '../../types/movieTypes';
 
 const SearchMovieScreen = () => {
-  const navigation = useNavigation();
-  const [categories, setCategories] = useState<any>([]);
+  const watchStackNavigation = useNavigation<WatchStackNavigationProp<'SearchMovie'>>();
+  const rootNavigation = useNavigation<RootStackNavigationProp<'MovieDetail'>>();
+  const [categories, setCategories] = useState<Array<Category & {image: string}>>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [movies, setMovies] = useState<any>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [showMovies, setShowMovies] = useState<boolean>(false);
   useEffect(() => {
     getMovies();
@@ -64,13 +67,13 @@ const SearchMovieScreen = () => {
     setCategories(genreImages);
   };
 
-  const renderItem = ({item}: any) => {
+  const renderItem = ({item}: {item: Category & {image: string}}) => {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.item}
         onPress={() =>
-          navigation?.navigate('CategoryMovies', {category: item})
+          watchStackNavigation.navigate('CategoryMovies', {category: item})
         }>
         <ImageBackground
           source={{uri: `${IMAGE_URL_FROM_ENV + item.image}`}}
@@ -81,12 +84,14 @@ const SearchMovieScreen = () => {
       </TouchableOpacity>
     );
   };
-  const renderMovieItem = ({item}: any) => {
+  const navigation = useNavigation<RootStackNavigationProp<'MovieDetail'>>();
+
+  const renderMovieItem = ({item}: {item: Movie}) => {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.movieItem}
-        onPress={() => navigation?.navigate('MovieDetail', {movieId: item.id})}>
+        onPress={() => rootNavigation.navigate('MovieDetail', {movieId: item.id})}>
         <Image
           source={{
             uri: `${IMAGE_URL_FROM_ENV + item.poster_path}`,
@@ -94,7 +99,7 @@ const SearchMovieScreen = () => {
           style={styles.movieImage}
         />
         <View style={styles.titleCont}>
-          <Text style={styles.title}>{item.original_title}</Text>
+          <Text style={styles.title}>{item.title}</Text>
           <Text numberOfLines={1} style={styles.genre}>
             {item.overview}
           </Text>

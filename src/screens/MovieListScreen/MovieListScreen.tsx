@@ -8,19 +8,23 @@ import {
   Image,
 } from 'react-native';
 import ScreenWrapper from '../../components/ScreenWrapper/ScreenWrapper';
+import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import MovieService from '../../services/movieService';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {WP} from '../../assets/config/space';
-import {IMAGE_URL_FROM_ENV} from '@env';
-import LinearGradient from 'react-native-linear-gradient';
-import CustomHeader from '../../components/CustomHeader/CustomHeader';
+import {RootStackNavigationProp, WatchStackNavigationProp} from '../../types/navigatorTypes';
+import {Movie, MovieListResponse} from '../../types/movieTypes';
+import {HP, WP} from '../../assets/config/space';
+import {colors} from '../../assets/config/colors';
 import Svgs from '../../assets/graphics/svgs';
+import LinearGradient from 'react-native-linear-gradient';
+import {IMAGE_URL_FROM_ENV} from '@env';
 
-const MovieListScreen = ({}: any) => {
-  const [movies, setMovies] = useState<any>([]);
+const MovieListScreen: React.FC = () => {
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
-  const navigation = useNavigation();
+  const watchStackNavigation = useNavigation<WatchStackNavigationProp<'SearchMovie'>>();
+  const rootNavigation = useNavigation<RootStackNavigationProp<'MovieDetail'>>();
   useEffect(() => {
     getMovies(page);
   }, [page]);
@@ -38,7 +42,7 @@ const MovieListScreen = ({}: any) => {
       <TouchableOpacity
         activeOpacity={0.5}
         style={styles.item}
-        onPress={() => navigation?.navigate('MovieDetail', {movieId: item.id})}>
+        onPress={() => rootNavigation.navigate('MovieDetail', {movieId: item.id})}>
         <ImageBackground
           source={{
             uri: `${IMAGE_URL_FROM_ENV}${item.poster_path}`,
@@ -56,9 +60,9 @@ const MovieListScreen = ({}: any) => {
   return (
     <ScreenWrapper>
       <CustomHeader
-        onPress={() => navigation?.navigate('SearchMovie')}
-        onPressLeft={() => navigation?.navigate('SearchMovie')}
-        onPressRight={() => navigation?.navigate('SearchMovie')}
+        onPress={() => watchStackNavigation.navigate('SearchMovie')}
+        onPressLeft={() => watchStackNavigation.navigate('SearchMovie')}
+        onPressRight={() => watchStackNavigation.navigate('SearchMovie')}
         title="Watch"
         IconRight={<Svgs.search />}
       />

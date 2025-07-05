@@ -1,14 +1,16 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Image, Platform, StyleSheet, TouchableOpacity} from 'react-native';
-import {colors} from '../assets/config/colors';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Image, Platform, StyleSheet, TouchableOpacity } from 'react-native';
+import { colors } from '../assets/config/colors';
 import WatchStack from './WatchStack';
-import {HP, mvs} from '../assets/config/space';
+import { HP, mvs } from '../assets/config/space';
 import Svgs from '../assets/graphics/svgs';
 import fontFamily from '../assets/config/fontFamily';
+import { BottomTabParamList } from '../types/navigatorTypes';
 
-export default function BottomTabNavigator(props?: any) {
-  const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<BottomTabParamList>();
+
+const BottomTabNavigator: React.FC = () => {
 
   return (
     <Tab.Navigator
@@ -59,7 +61,9 @@ export default function BottomTabNavigator(props?: any) {
       />
     </Tab.Navigator>
   );
-}
+};
+
+export default BottomTabNavigator;
 
 const styles = (props?: boolean) =>
   StyleSheet.create({
