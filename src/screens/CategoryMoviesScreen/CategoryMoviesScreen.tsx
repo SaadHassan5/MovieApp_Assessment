@@ -1,11 +1,11 @@
 import {
   FlatList,
-  ImageBackground,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import LoadingImageBackground from '../../components/LoadingImageBackground/LoadingImageBackground';
 import React, {useEffect, useState} from 'react';
 
 import {IMAGE_URL_FROM_ENV} from '@env';
@@ -55,14 +55,17 @@ export default function CategoryMoviesScreen(props?: any) {
         onPress={() =>
           props?.navigation?.navigate('MovieDetail', {movieId: item.id})
         }>
-        <ImageBackground
+        <LoadingImageBackground
           source={{
             uri: `${IMAGE_URL_FROM_ENV + item.poster_path}`,
           }}
-          style={styles.image}>
+          style={styles.image}
+          imageStyle={styles.image}
+          resizeMode="cover"
+        >
           <View style={styles.shadowOverlay} />
           <Text style={styles.text}>{item.original_title}</Text>
-        </ImageBackground>
+        </LoadingImageBackground>
       </TouchableOpacity>
     );
   };
@@ -70,7 +73,7 @@ export default function CategoryMoviesScreen(props?: any) {
   return (
     <ScreenWrapper>
       <CustomHeader
-        title="Back"
+        title={category?.name+' movies'}
         IconLeft={<Svgs.backArrow color={colors.black}/>}
         onPressLeft={() => navigation?.goBack()}
       />

@@ -4,10 +4,10 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  ImageBackground,
   View,
   Image,
 } from 'react-native';
+import LoadingImageBackground from '../../components/LoadingImageBackground/LoadingImageBackground';
 import ScreenWrapper from '../../components/ScreenWrapper/ScreenWrapper';
 import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import MovieService from '../../services/movieService';
@@ -57,17 +57,20 @@ const MovieListScreen: React.FC = () => {
         activeOpacity={0.5}
         style={styles.item}
         onPress={() => rootNavigation.navigate('MovieDetail', {movieId: item.id})}>
-        <ImageBackground
+        <LoadingImageBackground
           source={{
             uri: `${IMAGE_URL_FROM_ENV}${item.poster_path}`,
           }}
-          style={styles.image}>
+          style={styles.image}
+          imageStyle={styles.image}
+          resizeMode="cover"
+        >
           <LinearGradient
             colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
             style={styles.shadowOverlay}
           />
           <Text style={styles.text}>{item.original_title}</Text>
-        </ImageBackground>
+        </LoadingImageBackground>
       </TouchableOpacity>
     );
   };

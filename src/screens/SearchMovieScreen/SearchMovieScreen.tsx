@@ -4,11 +4,11 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ImageBackground,
   FlatList,
   Image,
   Keyboard,
 } from "react-native";
+import LoadingImageBackground from "../../components/LoadingImageBackground/LoadingImageBackground";
 import ScreenWrapper from "../../components/ScreenWrapper/ScreenWrapper";
 import { useNavigation } from "@react-navigation/native";
 import { IMAGE_URL_FROM_ENV } from "@env";
@@ -130,13 +130,15 @@ const SearchMovieScreen = () => {
           watchStackNavigation.navigate("CategoryMovies", { category: item })
         }
       >
-        <ImageBackground
+        <LoadingImageBackground
           source={{ uri: `${IMAGE_URL_FROM_ENV + item.image}` }}
           style={styles.image}
+          imageStyle={styles.image}
+          resizeMode="cover"
         >
           <View style={styles.shadowOverlay} />
           <Text style={styles.text}>{item.name}</Text>
-        </ImageBackground>
+        </LoadingImageBackground>
       </TouchableOpacity>
     );
   };
