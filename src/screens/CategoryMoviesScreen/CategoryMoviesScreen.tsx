@@ -17,25 +17,32 @@ import fontFamily from '../../assets/config/fontFamily';
 import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import Svgs from '../../assets/graphics/svgs';
 import ScreenWrapper from '../../components/ScreenWrapper/ScreenWrapper';
+import { useLoading } from '../../context/LoadingContext';
 
 export default function CategoryMoviesScreen(props?: any) {
   const {category} = props.route.params;
   const [movies, setMovies] = useState<any>([]);
   const [page, setPage] = useState(1);
   const navigation = useNavigation();
+  const { showLoading, hideLoading } = useLoading();
 
   useEffect(() => {
     getMovies();
   }, [page]);
 
   const getMovies = async () => {
+    try{
+    showLoading();
     const movieResponse = await MovieService.getCategoryImages(
       category?.id,
       page,
     );
     setMovies((prev: any) => [...prev, ...movieResponse.results]);
+  } catch (error) {
+  } finally {
+    hideLoading();
   };
-
+  }
   const loadMoreMovies = () => {
     setPage(prevPage => prevPage + 1);
   };

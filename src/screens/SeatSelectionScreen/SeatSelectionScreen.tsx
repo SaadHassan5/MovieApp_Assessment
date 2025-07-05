@@ -394,6 +394,7 @@ export default function SeatSelectionScreen(props?: any) {
           IconLeft={<Svgs.backArrow color={colors.black} />}
           detail={{name: title, description: 'In Theaters ' + 'May 21, 2025'}}
           IconRight={<></>}
+          onPressLeft={() => navigation.goBack()}
         />
         <View style={styles().viewCont}>
           <ReactNativeZoomableView

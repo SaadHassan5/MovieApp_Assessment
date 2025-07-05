@@ -83,7 +83,7 @@ const SearchMovieScreen = () => {
       if (isMounted.current) {
         await searchMovies(searchQuery);
       }
-    }, 500);
+    }, 1000);
 
     return () => {
       if (debounce.current) {
