@@ -101,6 +101,7 @@ export default function BookingScreen(props: any) {
           IconLeft={<Svgs.backArrow color={colors.black} />}
           detail={{name: title, description: 'In Theaters ' + date}}
           IconRight={<></>}
+          onPressLeft={() => navigation.goBack()}
         />
         <View>
           <Text style={styles().dateTxt}>Date</Text>
